@@ -4,6 +4,21 @@
 // const flights =
 //   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
+const weekdays = ['mon','tue','wed','thu','fri','sat','sun']
+const openingHours = {
+ [ weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 // Data needed for first part of the section
 const restaurant = {
     name: 'Classico Italiano',
@@ -11,39 +26,120 @@ const restaurant = {
     categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
     starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
     mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  
-    openingHours: {
-      thu: {
-        open: 12,
-        close: 22,
-      },
-      fri: {
-        open: 11,
-        close: 23,
-      },
-      sat: {
-        open: 0, // Open 24 hours
-        close: 24,
-      },
-    },
-    order : function(starterIndex, mainIndex){
+    //!enhanced ogject
+    openingHours,
+    // openingHours: {
+    //   thu: {
+    //     open: 12,
+    //     close: 22,
+    //   },
+    //   fri: {
+    //     open: 11,
+    //     close: 23,
+    //   },
+    //   sat: {
+    //     open: 0, // Open 24 hours
+    //     close: 24,
+    //   },
+    // },
+    //! no need write function 
+    order(starterIndex, mainIndex){
         return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
     },
 
      //? to do orderDelivery 
 
-   orderDelivery: function ({starterIndex =1 , mainIndex=0,time= '20:00' , address}){
+   orderDelivery({starterIndex =1 , mainIndex=0,time= '20:00' , address}){
     console.log(
         `Order recived! ${this.starterMenu[starterIndex]} 
         and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time} `
     );
    },
 
-   orderPasta: function(ing1,ing2,ing3){
+   orderPasta(ing1,ing2,ing3){
     console.log(`Here is your declicious pasta with${ing1},${ing2},${ing3}`);
-   }
+   },
+
+   orderPizza(mainIngredient, ...otherIngredients){
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+   },
+
   };
-   
+
+
+//? KEYS  //? 
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+// console.log(`we are open on ${properties.length} days`);
+let openStr = `we are open on ${properties.length} days`
+
+for (const day of properties){
+  // console.log(day);
+
+  openStr += `${day}, `;
+}
+
+console.log(openStr);
+///?VALUES
+const values = Object.values(openingHours);
+console.log(values);
+//?ENTRIES
+const entries = Object.entries(openingHours);
+// console.log(entries);
+
+for(const [key,{open,close}] of entries){
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+//   if(restaurant.openingHours && restaurant.openingHours.mon) 
+//   console.log(restaurant.openingHours.mon);
+//   //! WITH optional chaining 
+//   console.log(restaurant.openingHours.mon?.open);
+//   console.log(restaurant.openingHours?.mon?.open);
+
+//   if(restaurant.openingHours && restaurant.openingHours.fri) console.log(restaurant.openingHours.fri);
+
+// const days = ['mon','tue','wed','thu','fri','sat','sun'];
+// for ( const day of days){
+// console.log(day );
+// const open = restaurant.openingHours[day]?.open || 'closed';
+// console.log(`On ${day},we open at ${open}`);
+
+// }
+// console.log(restaurant.order?.(0,1) ?? 'Method does not exist');
+ 
+// // const users = [{name:'Jonas', enail: 'hello@jonas.io'}];
+// const users = [];
+
+// console.log(users[0]?.name ?? 'User array empty');
+
+// //?or 
+
+// if(users.length>0 )
+// console.log(users[0].name);
+// else 
+// console.log('User array empty');
+
+
+  //  console.log(restaurant); 
+// const menu = [...restaurant.starterMenu,...restaurant.mainMenu]
+//! for loop new 
+// for(const item of menu) console.log(item);
+
+// for(const item of menu.entries()){
+//   // console.log(item);
+//   console.log(`${item[0] + 1}: ${item[1]}`);
+// }
+
+// //! new thing for me !!!
+// for(const [i,el] of menu.entries()){
+//   // console.log(item);
+//   console.log(`${i + 1}: ${el}`);
+// } 
+// console.log([...menu.entries()]);
+
+
   // restaurant.orderDelivery({
   //   time: '23:30',
   //   address: ' Via del Sole, 21',
@@ -170,7 +266,7 @@ const restaurant = {
 
 //!Use Any data type , return any data type, Short_circuiting 
 
-console.log(3&& 'Jonas');
-console.log('' && 'Jonas');
-console.log(true&&0);
-console.log(undefined&&null);
+// console.log(3&& 'Jonas');
+// console.log('' && 'Jonas');
+// console.log(true&&0);
+// console.log(undefined&&null);
